@@ -24,7 +24,7 @@ class Game():
 
     def run(self):
         while self.running:
-            self.clock.tick(150)
+            self.clock.tick(10000)
             self.events()
 
 
@@ -41,7 +41,7 @@ class Game():
                 if event.key==pg.K_RETURN:
                     self.calc_object = Calculations(self.node_locations)
                     path_nodes = self.calc_object.main_function()
-                    self.draw_lines(path_nodes[0], path_nodes[1])
+                    self.draw_lines(path_nodes)
 
 
     def draw_node(self, location):
@@ -49,10 +49,10 @@ class Game():
         pg.display.flip()
 
 
-    def draw_lines(self, path, nodes): # im calling this func from calculations.py with node_path and node_locations arrays
-        line = 0
-        while line < len(nodes) - 1:
-            pg.draw.line(self.g_window, self.my_colour, nodes[line], nodes[line+1], self.line_thickness)
-            line += 1
-        pg.draw.line(self.g_window, self.my_colour, nodes[line], nodes[0], self.line_thickness)
+    def draw_lines(self, path): # im calling this func from calculations.py with node_path and node_locations arrays
+        path_pointer = 0
+        while path_pointer < len(self.node_locations) - 1:
+            pg.draw.line(self.g_window, self.my_colour, self.node_locations[path[path_pointer]], self.node_locations[path[path_pointer+1]], self.line_thickness)
+            path_pointer += 1
+        pg.draw.line(self.g_window, self.my_colour, self.node_locations[path[path_pointer]], self.node_locations[path[path_pointer+1]], self.line_thickness)
         pg.display.flip()
