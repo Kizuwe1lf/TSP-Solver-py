@@ -1,35 +1,19 @@
 class Calculations():
     def __init__(self, node_locs):
-        self.node_locations = node_locs
+        self.node_locations = node_locs # node_locs is a list of node_locations ex input = [(155, 200), (250, 150)]
         self.distance_matrix = [[-1]* len(self.node_locations) for i in range(len(self.node_locations))] # creating a distance matrix
-        self.path = [0] # starting from 0
         self.node_set = set(range(0, len(self.node_locations))) # i need nodes as set to get unvisited_nodes
         self.distance = None
         self.memo = dict() # for dp way
 
-    def main_function(self):
-        self.calculate_matrix()
-
+    def solve(self):
         if len(self.node_locations) < 8: # if nodes are lower than 8 bruteforce is way faster see L35 L37
-            self.distance, path = self.solve_it_bf(self.path, 0) # O(n!)
+            self.distance, path = self.solve_it_bf([0], 0) # O(n!)             First parameter are [0] cause i am starting from node 0 thats the list of visited_nodes
         else:
-            self.distance, path = self.solve_it_dp(self.path, 0) # O(n^2 2^n)
+            self.distance, path = self.solve_it_dp([0], 0) # O(n^2 2^n)        First parameter are [0] cause i am starting from node 0 thats the list of visited_nodes
 
         path = [0] + path # my algorithm doesnt give starting node (0)
-
-        self.print_info(path)
-
-        return path
-
-    def print_info(self, path):
-        output = "TSP Path\n"
-        for path_node in path:
-            output += f"{path_node+1} -> "
-
-        output = output[:-3]
-        output += f"\n\nTotal Cost Of Distance = {self.distance}\n\n"
-
-        print(output)
+        return path, self.distance
 
     def calculate_matrix(self):
         n = len(self.node_locations) - 1
@@ -49,7 +33,7 @@ class Calculations():
             self.distance_matrix[i] = temp_list
             i += 1
 
-
+        return 1
 
 
     def calculate_distance(self, node1_index, node2_index):
