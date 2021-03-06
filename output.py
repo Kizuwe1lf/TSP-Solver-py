@@ -2,14 +2,15 @@ from PIL import Image, ImageDraw
 
 class Output():
 
-    def __init__(self, node_locations, path, distance, solve_time, colour, line_thickness, node_thickness):
+    def __init__(self, node_locations, path, distance, solve_time, node_colour, line_colour, node_thickness, line_thickness):
         self.node_locations = node_locations
         self.path = path
         self.distance = distance
         self.solve_time = solve_time
-        self.colour = colour
-        self.line_thickness = line_thickness
+        self.node_colour = node_colour
+        self.line_colour = line_colour
         self.node_thickness = node_thickness
+        self.line_thickness = line_thickness
 
         self.img = Image.open("background.png")
         self.draw = ImageDraw.Draw(self.img)
@@ -28,13 +29,13 @@ class Output():
     def save_image(self):
         self.img.save("output.png")
 
-    def draw_nodes(self): # i have center and radius info but pil doesnt accept that way so i have to do some little work
+    def draw_nodes(self): # i have center and radius info but PIL doesnt accept that way so i have to do some little work
         radius = self.node_thickness -1 # because pill drawings are weird
         for center in self.node_locations:
             top_right = (center[0] + radius, center[1] + radius)
             bot_left = (center[0] - radius, center[1] - radius)
             locations = [bot_left, top_right]
-            self.draw.ellipse(locations, fill=self.colour)
+            self.draw.ellipse(locations, fill=self.node_colour)
 
         return 0
 
@@ -42,7 +43,7 @@ class Output():
         path_pointer = 0
         while path_pointer < len(self.node_locations):
             locations = [ self.node_locations[self.path[path_pointer]], self.node_locations[self.path[path_pointer+1]] ]
-            self.draw.line(locations, fill = self.colour, width = (self.line_thickness - 1))
+            self.draw.line(locations, fill = self.line_colour, width = (self.line_thickness - 1))
             path_pointer += 1
 
         return 0

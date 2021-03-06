@@ -6,8 +6,8 @@ class Calculations():
         self.distance = None
         self.memo = dict() # for dp way
 
-    def solve(self):
-        if len(self.node_locations) < 8: # if nodes are lower than 8 bruteforce is way faster see L35 L37
+    def solve(self): # main function
+        if len(self.node_locations) < 8: # if nodes are lower than 8 bruteforce is way faster see #L11 #L13
             self.distance, path = self.solve_it_bf([0], 0) # O(n!)             First parameter are [0] cause i am starting from node 0 thats the list of visited_nodes
         else:
             self.distance, path = self.solve_it_dp([0], 0) # O(n^2 2^n)        First parameter are [0] cause i am starting from node 0 thats the list of visited_nodes
@@ -15,7 +15,7 @@ class Calculations():
         path = [0] + path # my algorithm doesnt give starting node (0)
         return path, self.distance
 
-    def calculate_matrix(self):
+    def calculate_matrix(self): # creating distance_matrix using calculate_distance() method
         n = len(self.node_locations) - 1
 
         i = 0
@@ -36,7 +36,8 @@ class Calculations():
         return 1
 
 
-    def calculate_distance(self, node1_index, node2_index):
+    def calculate_distance(self, node1_index, node2_index): # calculating distance between 2 nodes
+
         if self.distance_matrix[node2_index][node1_index] != -1:   # check if i calculated the value before
             return self.distance_matrix[node2_index][node1_index]
 
