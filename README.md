@@ -12,4 +12,4 @@ How 2 Use
 Some Info\
 I perfectly divided output-calculations-userinterface work from each other\
 For example you wanna use different interface method\
-I specified and gave example about input calculations.py needs\
+I specified and gave example about input calculations.py needs
